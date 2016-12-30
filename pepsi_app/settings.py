@@ -163,3 +163,6 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_RENDERER_CLASSES':( 'rest_framework.renderers.JSONRenderer',),
 }
+
+MAX_COURSE_ONE_VIDEO = 5
+MAX_COURSE_TWO_VIDEO = 4

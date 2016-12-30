@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework import authentication, permissions
 from pprint import pprint
 import json
+from django.conf import settings
 
 class ServeVideoView(APIView):
     """
@@ -48,11 +49,11 @@ def ServeUser(request):
 @api_view(['POST'])
 def ServeQues(request, course_id, video_id):
     if course_id == '1':
-        covq=CourseOneVideoQues.objects.filter(video=CourseOneVideo.objects.get(video_id=video_id))
+        covq=CourseOneVideoQues.objects.filter(video=CourseOneVideo.objects.get(video_id=video_id)).order_by('ques_no')
         serializer = CourseOneVideoQuesSerializer(covq, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     elif course_id == '2':
-        ctq=CourseTwoQues.objects.all()
+        ctq=CourseTwoQues.objects.all().order_by('ques_no')
         serializer = CourseTwoQuesSerializer(ctq, many=True)
         pprint(serializer.data)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -111,12 +112,28 @@ def ServeQues(request, course_id, video_id):
 #     elif request.data['course_id'] == '2':
 #         return Response(data={'status': True}, status=status.HTTP_200_OK)
 
+@api_view(['POST'])
+def SaveVideoStatus(request):
+    data = request.data
+    # course_id = data['course_id']
+    # video_id = data ['video_id']
+    status = False
+    up = UserProfile.objects.get(user=request.user)
+    if data['course_id'] == '2':
+        if up.c2cm < settings.MAX_COURSE_TWO_VIDEO:
+            up.c2cm+=1
+            up.save()
+            status = True
+    return Response(data={'status': status}, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 def CheckAnswers(request):
     data=request.data
     test_clear=None
-
+    pprint("___________________________________")
+    pprint(request.user)
+    up = UserProfile.objects.get(user=request.user)
+    course_completed = False
     if data['course_id'] == '1':
         video_id = data['video_id']
         video = CourseOneVideo.objects.get(video_id=video_id)
@@ -133,7 +150,16 @@ def CheckAnswers(request):
                 test_clear = False
             cas_list.append(cas)
         serializer=CheckAnsSerializer(cas_list, many=True)
-        return Response({"data":serializer.data, "test_clear":test_clear},  status=status.HTTP_200_OK)
+        if test_clear:
+            if video_id == settings.MAX_COURSE_ONE_VIDEO:
+                up.c1_status = True
+                up.save()
+                course_completed = True
+            else:
+                up.c1cm+=1
+                up.save()
+        return Response({"data":serializer.data, "test_clear":test_clear, "course_completed":course_completed},  status=status.HTTP_200_OK)
+
     if data['course_id'] == '2':
         ques_list = request.data['q']
         cas_list = []
@@ -146,6 +172,9 @@ def CheckAnswers(request):
                 cas.is_correct = False
                 test_clear = False
             cas_list.append(cas)
+        if test_clear:
+            up.c2_status = True
+            up.save()
         serializer=CheckAnsSerializer(cas_list, many=True)
         return Response({"data":serializer.data, "test_clear":test_clear},  status=status.HTTP_200_OK)
 

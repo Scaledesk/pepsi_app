@@ -6,8 +6,8 @@ from core.models import *
 #      exclude = ('max_videos',)
 
 admin.site.register(UserProfile)
-admin.site.register(CourseOne)
-admin.site.register(CourseTwo)
+# admin.site.register(CourseOne)
+# admin.site.register(CourseTwo)
 admin.site.register(CourseOneVideo)
 admin.site.register(CourseTwoVideo)
 admin.site.register(CourseOneVideoQues)

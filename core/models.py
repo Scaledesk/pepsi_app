@@ -51,25 +51,25 @@ class UserProfile(BaseModel):
     def __unicode__(self):
         return self.user.username
 
-class CourseOne(BaseModel):
-    course_name = models.CharField(max_length=100, unique=True)
-    course_description = models.CharField(max_length=150)
-
-    class Meta:
-        verbose_name = "Course One"
-        verbose_name_plural = "Course One"
-    def __unicode__(self):
-        return "Course One"
-
-class CourseTwo(BaseModel):
-    course_name = models.CharField(max_length=100, unique=True)
-    course_description = models.CharField(max_length=150)
-
-    class Meta:
-        verbose_name = "Course Two"
-        verbose_name_plural = "Course Two"
-    def __unicode__(self):
-        return "Course Two"
+# class CourseOne(BaseModel):
+#     course_name = models.CharField(max_length=100, unique=True)
+#     course_description = models.CharField(max_length=150)
+#
+#     class Meta:
+#         verbose_name = "Course One"
+#         verbose_name_plural = "Course One"
+#     def __unicode__(self):
+#         return "Course One"
+#
+# class CourseTwo(BaseModel):
+#     course_name = models.CharField(max_length=100, unique=True)
+#     course_description = models.CharField(max_length=150)
+#
+#     class Meta:
+#         verbose_name = "Course Two"
+#         verbose_name_plural = "Course Two"
+#     def __unicode__(self):
+#         return "Course Two"
 
 class CourseOneVideo(BaseModel):
     video_id = models.IntegerField(unique=True)
@@ -110,7 +110,8 @@ class CourseOneVideoQues(BaseModel):
     correct = models.CharField(max_length=1, choices=OPTION_CHOICES)
     class Meta:
         verbose_name = "Course One Video Question"
-        verbose_name_plural = "Coruse One Video Questions"
+        verbose_name_plural = "Course One Video Questions"
+        unique_together = ('video', 'ques_no',)
     def __unicode__(self):
         return ("Course-1 Video-" + str(self.video.video_id) + " Question No-" + str(self.ques_no))
 
@@ -129,6 +130,6 @@ class CourseTwoQues(BaseModel):
 
     class Meta:
         verbose_name = "Course Two Question"
-        verbose_name_plural = "Coruse Two Questions"
+        verbose_name_plural = "Course Two Questions"
     def __unicode__(self):
         return ("Course-2 Question No-" + str(self.ques_no))

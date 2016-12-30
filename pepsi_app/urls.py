@@ -40,5 +40,7 @@ urlpatterns = [
     url(r'current-module/', SaveCurrentModule),
     url(r'course-status/', SaveCourseStatus),
     url(r'check-answers/', CheckAnswers),
+    url(r'save-video-status/', SaveVideoStatus),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

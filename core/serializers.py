@@ -22,7 +22,8 @@ class CourseOneVideoQuesSerializer(serializers.ModelSerializer):
 class CourseTwoQuesSerializer(serializers.ModelSerializer):
     class Meta:
         model = CourseTwoQues
-        fields = ('id', 'ques', 'a', 'b', 'c', 'd' )
+        fields = ('id', 'ques', 'ques_no', 'a', 'b', 'c', 'd' )
+        order_by = ('ques_no')
 
 class CourseOneVideoSerializer(serializers.ModelSerializer):
     class Meta:
