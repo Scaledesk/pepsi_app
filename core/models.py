@@ -37,7 +37,9 @@ class BaseModel(models.Model):
 
 class UserProfile(BaseModel):
     """ BaseModel to save user data """
-    user = models.ForeignKey(User)
+    # user = models.ForeignKey(User)
+    emp_id = models.CharField(default='asdfasdfadfasdf', max_length = 20, unique=True)
+    emp_name = models.CharField(default='nahi pata', max_length = 30)
     c1cm = models.IntegerField(default=1)
     c2cm = models.IntegerField(default=1)
     # c1cq = models.IntegerField(default=0)

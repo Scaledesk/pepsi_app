@@ -24,20 +24,15 @@ urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    # url(r'^api/', include('api.urls', namespace='api')),
 
     # login and logout handlers
-    url(r'login/', views.obtain_auth_token),
-    url(r'user/', ServeUser), #(?P<course_id>\d+)/(?P<video_id>\d+)/
-    # url(r'video/(?P<course_id>\d+)/(?P<video_id>\d+)/', ServeVideoView.as_view()),
+    url(r'login-register/', LoginRegister),
+    # url(r'login/', views.obtain_auth_token),
+    # url(r'user/', ServeUser), #(?P<course_id>\d+)/(?P<video_id>\d+)/
 
     url(r'video/', ServeVideo), #(?P<course_id>\d+)/(?P<video_id>\d+)/
-    # url(r'login/user/', LoginView.as_view({'post': 'login_user'})),
-    # url(r'logout/', LogoutView.as_view({'post': 'logout_user'})),
-    # url(r'^logout/', LogoutView.as_view()),
-    # url(r'^logout/', Logout),
-    url(r'question/(?P<course_id>\d+)/(?P<video_id>\d+)/', ServeQues), #(?P<course_id>\d+)/(?P<video_id>\d+)/
-    url(r'current-module/', SaveCurrentModule),
+    url(r'question/', ServeQues), #(?P<course_id>\d+)/(?P<video_id>\d+)/
+    # url(r'current-module/', SaveCurrentModule),
     url(r'course-status/', SaveCourseStatus),
     url(r'check-answers/', CheckAnswers),
     url(r'save-video-status/', SaveVideoStatus),
