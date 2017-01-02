@@ -109,7 +109,7 @@ def ServeQues(request, course_id, video_id):
 #             # if obj.correct != q_list[key]:
 #             #     test_clear = False
 #         return Response({"data":serializer.data, "test_clear":"False"},  status=status.HTTP_200_OK)
-#     elif request.data['course_id'] == '2':
+#     elif request.data['course_id'] == '2':data=
 #         return Response(data={'status': True}, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
@@ -124,16 +124,18 @@ def SaveVideoStatus(request):
             up.c2cm+=1
             up.save()
             status = True
-    return Response(data={'status': status}, status=status.HTTP_200_OK)
+            pprint('_________________________________________')
+            pprint(status)
+            pprint(up.c2cm)
+        return Response(data={'status': status}, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 def CheckAnswers(request):
     data=request.data
     test_clear=None
-    pprint("___________________________________")
-    pprint(request.user)
     up = UserProfile.objects.get(user=request.user)
     course_completed = False
+    total_correct = 0
     if data['course_id'] == '1':
         video_id = data['video_id']
         video = CourseOneVideo.objects.get(video_id=video_id)
@@ -145,6 +147,7 @@ def CheckAnswers(request):
             cas.ques_no = key
             if CourseOneVideoQues.objects.get(video=video, ques_no=int(key)).correct == ques_list[key]:
                 cas.is_correct = True
+                total_correct+=1
             else:
                 cas.is_correct = False
                 test_clear = False
@@ -158,7 +161,7 @@ def CheckAnswers(request):
             else:
                 up.c1cm+=1
                 up.save()
-        return Response({"data":serializer.data, "test_clear":test_clear, "course_completed":course_completed},  status=status.HTTP_200_OK)
+        return Response({"data":serializer.data, "total_correct":total_correct, "test_clear":test_clear, "course_completed":course_completed},  status=status.HTTP_200_OK)
 
     if data['course_id'] == '2':
         ques_list = request.data['q']
@@ -168,6 +171,7 @@ def CheckAnswers(request):
             cas.ques_no = key
             if CourseTwoQues.objects.get(ques_no=int(key)).correct == ques_list[key]:
                 cas.is_correct = True
+                total_correct+=1
             else:
                 cas.is_correct = False
                 test_clear = False
@@ -175,8 +179,10 @@ def CheckAnswers(request):
         if test_clear:
             up.c2_status = True
             up.save()
+        # cas_list.order_by('ques_no')
+        cas_list.sort(key=lambda x: x.ques_no.lower())
         serializer=CheckAnsSerializer(cas_list, many=True)
-        return Response({"data":serializer.data, "test_clear":test_clear},  status=status.HTTP_200_OK)
+        return Response({"data":serializer.data, "total_correct":total_correct, "test_clear":test_clear},  status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 def SaveCurrentModule(request):
