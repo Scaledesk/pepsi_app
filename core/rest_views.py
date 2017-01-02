@@ -52,8 +52,8 @@ def ServeVideo(request):
 @api_view(['POST'])
 def ServeQues(request):
     course_id = request.data['course_id']
-    video_id = request.data['video_id']
     if course_id == '1':
+        video_id = request.data['video_id']
         covq=CourseOneVideoQues.objects.filter(video=CourseOneVideo.objects.get(video_id=video_id)).order_by('ques_no')
         serializer = CourseOneVideoQuesSerializer(covq, many=True)
         return Response(data={'data':serializer.data}, status=status.HTTP_200_OK)
@@ -133,19 +133,19 @@ def CheckAnswers(request):
 
 
 
-@api_view(['POST'])
-def SaveCourseStatus(request):
-        up = UserProfile.objects.get(emp_id=request.data['emp_id'])
-        if request.data['course_id'] == '1':
-            if request.data['cs'] == 'true':
-                up.c1_status = True
-                up.save()
-                return Response(data={'status': True}, status=status.HTTP_200_OK)
-        elif request.data['course_id'] == '2':
-            if request.data['cs'] == 'true':
-                up.c2_status = True
-                up.save()
-                return Response(data={'status': True}, status=status.HTTP_200_OK)
+# @api_view(['POST'])
+# def SaveCourseStatus(request):
+#         up = UserProfile.objects.get(emp_id=request.data['emp_id'])
+#         if request.data['course_id'] == '1':
+#             if request.data['cs'] == 'true':
+#                 up.c1_status = True
+#                 up.save()
+#                 return Response(data={'status': True}, status=status.HTTP_200_OK)
+#         elif request.data['course_id'] == '2':
+#             if request.data['cs'] == 'true':
+#                 up.c2_status = True
+#                 up.save()
+#                 return Response(data={'status': True}, status=status.HTTP_200_OK)
 
 
 # @api_view(['POST'])

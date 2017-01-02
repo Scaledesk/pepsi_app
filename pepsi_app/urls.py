@@ -33,7 +33,7 @@ urlpatterns = [
     url(r'video/', ServeVideo), #(?P<course_id>\d+)/(?P<video_id>\d+)/
     url(r'question/', ServeQues), #(?P<course_id>\d+)/(?P<video_id>\d+)/
     # url(r'current-module/', SaveCurrentModule),
-    url(r'course-status/', SaveCourseStatus),
+    # url(r'course-status/', SaveCourseStatus),
     url(r'check-answers/', CheckAnswers),
     url(r'save-video-status/', SaveVideoStatus),
 
