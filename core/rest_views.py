@@ -15,6 +15,10 @@ from rest_framework.authtoken.models import Token
 
 @api_view(['POST'])
 def LoginRegister(request):
+    """
+    view to match the user to its profile if profile exist,
+    if not, user profile is created and than user is matched to its user profile
+    """
     emp_id = request.data['emp_id']
     emp_name = request.data['emp_name']
     data = {}
@@ -39,6 +43,9 @@ class ServeVideoView(APIView):
 
 @api_view(['POST'])
 def ServeVideo(request):
+    """
+    view to serve the video url on request.
+    """
     cv=None
     data=request.data
     if data['course_id']=='1':
@@ -51,6 +58,9 @@ def ServeVideo(request):
 
 @api_view(['POST'])
 def ServeQues(request):
+    """
+    view to serve question on request
+    """
     course_id = request.data['course_id']
     if course_id == '1':
         video_id = request.data['video_id']
@@ -66,6 +76,9 @@ def ServeQues(request):
 
 @api_view(['POST'])
 def SaveVideoStatus(request):
+    """
+    view to save video status for course 2.
+    """
     data = request.data
     task_status = False
     up = UserProfile.objects.get(emp_id=request.data['emp_id'])
@@ -78,6 +91,9 @@ def SaveVideoStatus(request):
 
 @api_view(['POST'])
 def CheckAnswers(request):
+    """
+    view to check the answer of modules, if found all correct, databases is updated
+    """
     data=request.data
     test_clear=True
     up = UserProfile.objects.get(emp_id=request.data['emp_id'])

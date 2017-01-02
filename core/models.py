@@ -53,27 +53,8 @@ class UserProfile(BaseModel):
     def __unicode__(self):
         return self.user.username
 
-# class CourseOne(BaseModel):
-#     course_name = models.CharField(max_length=100, unique=True)
-#     course_description = models.CharField(max_length=150)
-#
-#     class Meta:
-#         verbose_name = "Course One"
-#         verbose_name_plural = "Course One"
-#     def __unicode__(self):
-#         return "Course One"
-#
-# class CourseTwo(BaseModel):
-#     course_name = models.CharField(max_length=100, unique=True)
-#     course_description = models.CharField(max_length=150)
-#
-#     class Meta:
-#         verbose_name = "Course Two"
-#         verbose_name_plural = "Course Two"
-#     def __unicode__(self):
-#         return "Course Two"
-
 class CourseOneVideo(BaseModel):
+    """model to save video urls for course 1 videos"""
     video_id = models.IntegerField(unique=True)
     video_title = models.CharField(max_length=100)
     # video_file = models.FileField(upload_to='course_one_video/', max_length=200)
@@ -86,6 +67,7 @@ class CourseOneVideo(BaseModel):
         return str(self.video_id)
 
 class CourseTwoVideo(BaseModel):
+    """model to save url for course 2 videos"""
     video_id = models.IntegerField(unique=True)
     video_title = models.CharField(max_length=100)
     # video_file = models.FileField(upload_to='course_one_video/', max_length=200)
@@ -98,6 +80,7 @@ class CourseTwoVideo(BaseModel):
         return str(self.video_id)
 
 class CourseOneVideoQues(BaseModel):
+    """model to save question for course 1 modules"""
     OPTION_CHOICES=(('a','A'),
                     ('b','B'),
                     ('c','C'),
@@ -118,6 +101,7 @@ class CourseOneVideoQues(BaseModel):
         return ("Course-1 Video-" + str(self.video.video_id) + " Question No-" + str(self.ques_no))
 
 class CourseTwoQues(BaseModel):
+    """model to save question for course 2 models"""
     OPTION_CHOICES=(('a','A'),
                     ('b','B'),
                     ('c','C'),
