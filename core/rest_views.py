@@ -143,7 +143,7 @@ def CheckAnswers(request):
             up.c2_status = True
             up.save()
         # cas_list.order_by('ques_no')
-        cas_list.sort(key=lambda x: x.ques_no.lower())
+        cas_list.sort(key=lambda x: int(x.ques_no))
         serializer=CheckAnsSerializer(cas_list, many=True)
         return Response(data={"data":serializer.data, "total_correct":total_correct, "test_clear":test_clear,  "course_completed":up.c2_status},  status=status.HTTP_200_OK)
 
