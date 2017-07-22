@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'pepsi_app',
         'USER': 'root',
-        'PASSWORD': 'as',
+        'PASSWORD': 'abc',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -173,5 +173,5 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES':( 'rest_framework.renderers.JSONRenderer',),
 }
 
-MAX_COURSE_ONE_VIDEO = 5
+MAX_COURSE_ONE_VIDEO = 3
 MAX_COURSE_TWO_VIDEO = 4

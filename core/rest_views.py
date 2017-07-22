@@ -147,8 +147,6 @@ def CheckAnswers(request):
         serializer=CheckAnsSerializer(cas_list, many=True)
         return Response(data={"data":serializer.data, "total_correct":total_correct, "test_clear":test_clear,  "course_completed":up.c2_status},  status=status.HTTP_200_OK)
 
-
-
 # @api_view(['POST'])
 # def SaveCourseStatus(request):
 #         up = UserProfile.objects.get(emp_id=request.data['emp_id'])
