@@ -38,8 +38,8 @@ class BaseModel(models.Model):
 class UserProfile(BaseModel):
     """ BaseModel to save user data """
     # user = models.ForeignKey(User)
-    emp_id = models.CharField(default='asdfasdfadfasdf', max_length = 20, unique=True)
-    emp_name = models.CharField(default='nahi pata', max_length = 30)
+    emp_id = models.CharField(max_length = 20, unique=True)
+    emp_name = models.CharField(max_length = 30)
     c1cm = models.IntegerField(default=1)
     c2cm = models.IntegerField(default=1)
     # c1cq = models.IntegerField(default=0)
@@ -51,7 +51,7 @@ class UserProfile(BaseModel):
         verbose_name = 'User Profile'
         verbose_name_plural = 'User Profiles'
     def __unicode__(self):
-        return self.user.username
+        return self.emp_id
 
 class CourseOneVideo(BaseModel):
     """model to save video urls for course 1 videos"""

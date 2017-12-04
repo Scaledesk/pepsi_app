@@ -17,7 +17,7 @@ from rest_framework.authtoken.models import Token
 def LoginRegister(request):
     """
     view to match the user to its profile if profile exist,
-    if not, user profile is created and than user is matched to its user profile
+    if not, user profile is created and then user is matched to its user profile
     """
     emp_id = request.data['emp_id']
     emp_name = request.data['emp_name']
