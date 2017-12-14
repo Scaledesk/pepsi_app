@@ -40,12 +40,12 @@ class UserProfile(BaseModel):
     # user = models.ForeignKey(User)
     emp_id = models.CharField(max_length = 20, unique=True)
     emp_name = models.CharField(max_length = 30)
-    c1cm = models.IntegerField(default=1)
-    c2cm = models.IntegerField(default=1)
+    c1cm = models.IntegerField(default=1,verbose_name='Course 1 current module')
+    c2cm = models.IntegerField(default=1,verbose_name='Course 2 current module')
     # c1cq = models.IntegerField(default=0)
     # c2cq = models.IntegerField(default=0)
-    c2_status = models.BooleanField(default=False)
-    c1_status = models.BooleanField(default=False)
+    c2_status = models.BooleanField(default=False,verbose_name='Course 1 Completed')
+    c1_status = models.BooleanField(default=False,verbose_name='Course 2 Completed')
 
     class Meta:
         verbose_name = 'User Profile'
@@ -81,10 +81,6 @@ class CourseTwoVideo(BaseModel):
 
 class CourseOneVideoQues(BaseModel):
     """model to save question for course 1 modules"""
-    OPTION_CHOICES=(('a','A'),
-                    ('b','B'),
-                    ('c','C'),
-                    ('d','D'))
     video=models.ForeignKey(CourseOneVideo, on_delete=models.CASCADE)
     ques_no = models.IntegerField()
     ques = models.CharField(max_length=200)
@@ -92,27 +88,27 @@ class CourseOneVideoQues(BaseModel):
     b = models.CharField(max_length=100)
     c = models.CharField(max_length=100)
     d = models.CharField(max_length=100)
-    correct = models.CharField(max_length=1, choices=OPTION_CHOICES)
+    correct = models.CharField(max_length=50)
     class Meta:
-        verbose_name = "Course One Video Question"
-        verbose_name_plural = "Course One Video Questions"
+        verbose_name = "Course One Question"
+        verbose_name_plural = "Course One Questions"
         unique_together = ('video', 'ques_no',)
     def __unicode__(self):
         return ("Course-1 Video-" + str(self.video.video_id) + " Question No-" + str(self.ques_no))
 
 class CourseTwoQues(BaseModel):
     """model to save question for course 2 models"""
-    OPTION_CHOICES=(('a','A'),
-                    ('b','B'),
-                    ('c','C'),
-                    ('d','D'))
+    # OPTION_CHOICES=(('a','A'),
+    #                 ('b','B'),
+    #                 ('c','C'),
+    #                 ('d','D'))
     ques_no = models.IntegerField(unique=True)
     ques = models.CharField(max_length=200)
     a = models.CharField(max_length=100)
     b = models.CharField(max_length=100)
     c = models.CharField(max_length=100)
     d = models.CharField(max_length=100)
-    correct = models.CharField(max_length=1, choices=OPTION_CHOICES)
+    correct = models.CharField(max_length=50)
 
     class Meta:
         verbose_name = "Course Two Question"
